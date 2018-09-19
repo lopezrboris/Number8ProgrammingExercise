@@ -1,0 +1,78 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number8 - Programming excercise</title>
+    <link href="Content/bootstrap.css" rel="stylesheet"/>
+
+
+    <link href="Content/flat-datapicker.css" rel="stylesheet"/>
+    <link href='Content/jquery-ui.min.css' rel='stylesheet' media='print' />
+    <link href='Content/jquery-ui.css' rel='stylesheet' />
+    <link href='Content/bootstrap.min.css' rel='stylesheet' />
+    <link href="style.css" rel="stylesheet" />
+</head>
+<body>
+    
+    <div class="container body-content">
+
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+        </ul>
+    </div>
+
+    <div id="page-content-wrapper">
+        <div class="form-group">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
+                    <div class="form-group">
+                        <label for="startDate"> Start date </label>
+                        <input type="text" class="form-control" name="startDate" id="startDate">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
+                    <div class="form-group">
+                        <label for="numDays"> Number of days </label>
+                        <input type="text" id="numDays" class="form-control text-right" maxlength="2">
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
+                    <div class="form-group">
+                        <label for="startDate"> Country code </label>
+                        <input type="text" class="form-control" name="countryCode" id="countryCode">
+                    </div>
+                </div>
+        </div>
+        <div class="form-group">
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
+                    <div class="form-group">
+                        <div class="calendar"></div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
+                </div>
+        </div>
+    </div>
+</div>
+    </div>
+    <script>
+        number8calendar = {};
+        calendar = {};
+    </script>
+
+    <script src="Scripts/jquery-1.10.2.js"></script>
+    <script src='Scripts/jquery.min.js'></script>
+    <script src='Scripts/jquery-ui.min.js'></script>
+    <script src='Scripts/bootstrap.min.js'></script>
+    <script src='Scripts/moment.min.js'></script>
+    <script src="Scripts/bootstrap-toolkit.min.js"></script>
+    <script src="calendar.js"></script>
+    <script src="main.js"></script>
+</body>
+</html>

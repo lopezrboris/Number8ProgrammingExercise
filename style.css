@@ -1,0 +1,44 @@
+.calendar{
+    /*background-color: darkgray;*/
+}
+
+.calendar > div > div{
+    background-color: lightgray;
+    text-align: center;
+    font-weight: bold;
+}
+
+.month-label{
+    background-color: lightgray;
+    text-align: center;
+    font-weight: bold;
+}
+
+.out-range{
+    background-color: gray;
+}
+
+.valid-date{
+    background-color: white;
+    color: black;
+}
+.space{
+    background-color: white;
+}
+
+@media (min-width: 1200px) {
+    .seven-cols .col-md-1,
+    .seven-cols .col-sm-1,
+    .seven-cols .col-lg-1 {
+      width: 14.285714285714285714285714285714%;
+      *width: 14.285714285714285714285714285714%;
+    }
+  }
+
+  .campo-spinner {
+    padding-right: 20px;
+}
+
+    .campo-spinner > input {
+        margin-top: 0px !important;
+    }
