@@ -203,10 +203,11 @@ var initArgs = {
         $("#holydaysSummary").text(countryCode? "Selected: "+ countryCode.text : "Unknowed country code");
         setTimeout(() => {
             number8calendar.drawCalendar();
-        }, 500);
+        }, 200);
     }
 
     this.drawCalendar = function(){
+        initArgs.days = $("#numDays").val();
         calendar.draw(initArgs);  
     }
 
