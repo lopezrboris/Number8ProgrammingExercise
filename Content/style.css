@@ -25,7 +25,7 @@
 
 .cell{
     border: solid 1px #effcd8;
-    text-align: left;
+    text-align: center;
 }
 
 .invalid-date{
@@ -45,7 +45,7 @@
     background-color: #c4dd92 !important;
 }
 
-.hollyDay{
+.holyDay{
     background-color: #ff7900 !important;
 }
 
@@ -56,4 +56,3 @@
     .field-spinner > input {
         margin-top: 0px !important;
     }
-

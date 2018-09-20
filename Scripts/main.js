@@ -1,8 +1,18 @@
 var initArgs = {
-    startDate: new Date(),
-    days: 80,
+    startDate: new Date(2008,7,15),
+    days: 30,
     countryCode: "US",
-    hollyDays: [new Date()]
+    hollyDays: {
+        "US": [new Date(2008,8,1), new Date(2019,0,1),new Date(2019,0,21),new Date(2019,1,18),new Date(2019,4,27)
+        ,new Date(2019,6,4),new Date(2019,9,14),new Date(2019,10,11),new Date(2019,10,28),new Date(2019,11,25)],
+        "BO": [new Date(2019,0,1), new Date(2019,0,22), new Date(2019,0,24), new Date(2019,1,10)
+            , new Date(2019,1,12), new Date(2019,1,13), new Date(2019,2,19), new Date(2019,2,23)
+            , new Date(2019,2,30), new Date(2019,3,12), new Date(2019,3,15), new Date(2019,4,1)
+            , new Date(2019,4,25), new Date(2019,4,27), new Date(2019,4,31), new Date(2019,5,21)
+            , new Date(2019,5,24), new Date(2019,6,16), new Date(2019,7,6), new Date(2019,7,17)
+            , new Date(2019,8,14), new Date(2019,8,24), new Date(2019,9,11), new Date(2019,10,2)
+            , new Date(2019,10,10), new Date(2019,10,18), new Date(2019,11,25)]
+    }
 };
 //var hollydays = [new Date('2018-')]
 (function(){
@@ -67,7 +77,75 @@ var initArgs = {
             options.enlace.registro[options.enlace.clave] = options.enlace.formato ? $(this).datepicker({ dateFormat: options.enlace.formato }).val() : $(this).datepicker("getDate");
 
             return $(this);
-        }
+        },
+        isAutocomplete: function (opciones) {
+            var itemSeleccionado = null;
+            if (opciones && opciones.data) {
+                var items = [], hash = {};
+                $(this).empty();
+
+                $.each(opciones.data, function (index, item) {
+                    if (opciones.clave) {
+                        hash[item[opciones.clave]] = item;
+                        if (opciones.labelCompuesto) {
+                            var c1 = item[opciones.labelCompuesto.claves.split(",")[0]];
+                            var c2 = item[opciones.labelCompuesto.claves.split(",")[1]];
+                            var c3 = item[opciones.labelCompuesto.claves.split(",")[2]];
+                            //var texto = generador.generarPlantilla(opciones.labelCompuesto.plantilla)({ clave1: c1, clave2: c2, clave3: c3 }).toUpperCase();
+                            var texto = opciones.labelCompuesto.plantilla.replace("${clave1}", c1).replace("${clave2}", c2).replace("${clave3}", c3).toUpperCase();
+                        } else {
+                            var texto = item[opciones.valor].toUpperCase();
+                        }
+
+                        items.push({ value: item[opciones.clave], label: texto });
+                    } else {
+                        var keys = Object.keys(item);
+                        hash[item[keys[0]]] = item;
+                        items.push({ value: item[keys[0]], label: item[keys[1]].toUpperCase() });
+                    }
+                });
+                $(this).autocomplete({
+                    source: items,
+                    select: function (e, item) {
+                        itemSeleccionado = hash[item.item.value];
+                        if (opciones.labelCompuesto)
+                            $(this).val(opciones.labelCompuesto.label ? itemSeleccionado[opciones.labelCompuesto.label] : item.item.label);
+                        else
+                            $(this).val(item.item.label);
+
+                        if (opciones.seleccion)
+                            opciones.seleccion(itemSeleccionado);
+
+                        if (opciones.enlace)
+                            opciones.enlace.registro[opciones.enlace.clave] = item.item.value;
+                        return false;
+                    },
+                    response: function () {
+                        itemSeleccionado = null;
+                        return false;
+                    }
+                });
+                $(this).blur(function () {
+                    if (!itemSeleccionado) {
+                        var texto = $(this)[0].value;
+                        var encontrados = items.where(function (item) { return item.label.toUpperCase() == texto.toUpperCase() });
+                        if (opciones.enlace)
+                            if (encontrados.length) {
+                                itemSeleccionado = hash[encontrados[0].value];
+                                if (opciones.enlace)
+                                    opciones.enlace.registro[opciones.enlace.clave] = itemSeleccionado;
+                            } else
+                                opciones.enlace.registro[opciones.enlace.clave] = 0;
+                    }
+                });
+                if (opciones.enlace) {
+                    itemSeleccionado = hash[opciones.enlace.registro[opciones.enlace.clave]];
+                    if (itemSeleccionado)
+                        $(this).val(itemSeleccionado[Object.keys(itemSeleccionado)[1]]);
+                }
+            }
+            return $(this);
+        },
     });
 
     Date.prototype.add = function (interval, unidades) {
@@ -84,6 +162,11 @@ var initArgs = {
         }
         return this;
     }
+    Date.prototype.withoutTime = function () {
+        var d = new Date(this);
+        d.setHours(0, 0, 0, 0);
+        return d;
+    }
     Array.prototype.contains = function (o, comparer) {
         var defaultEqualityComparer = function (a, b) {
             return a === b || a.valueOf() === b.valueOf();
@@ -94,19 +177,37 @@ var initArgs = {
             if (comparer(this[l], o) === true) return true;
         return false;
     };
+    Array.prototype.where = Array.prototype.filter || function (predicate, context) {
+        context = context || window;
+        var arr = [];
+        var l = this.length;
+        for (var i = 0; i < l; i++)
+            if (predicate.call(context, this[i], i, this) === true) arr.push(this[i]);
+        return arr;
+    };
 
     this.init = function(){
         this.initcontrols();
-        this.drawCalendar();
+        this.autocompleted({id:"US", text:"US"});
     }
 
     this.initcontrols = function(){
+        var countryCode = [{id:"US", text:"US"}, {id:"BO", text:"BO"}];
+        
         $("#startDate").isCalendar({ enlace: { registro: initArgs, clave: "startDate" }, seleccion: number8calendar.drawCalendar  });
         $("#numDays").isSpinner({ minimo: 0, maximo: 1000, paso: 1, enlace: { registro: initArgs, clave: "days" }, seleccion: number8calendar.drawCalendar });
+        $("#countryCode").isAutocomplete({ data: countryCode, enlace: { registro: initArgs, clave: "countryCode" }, seleccion: number8calendar.autocompleted });
+    }
+
+    this.autocompleted = function(countryCode){
+        $("#holydaysSummary").text(countryCode? "Selected: "+ countryCode.text : "Unknowed country code");
+        setTimeout(() => {
+            number8calendar.drawCalendar();
+        }, 500);
     }
 
     this.drawCalendar = function(){
-        calendar.draw(initArgs);       
+        calendar.draw(initArgs);  
     }
 
     

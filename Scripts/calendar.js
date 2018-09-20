@@ -13,7 +13,7 @@
 
     this.reset = function(){
         this.monthIndex = 0;
-        this.currentMonth = 0;
+        this.currentMonth = null;
         this.args = {};
     }
 
@@ -37,11 +37,16 @@
                 var cell = $("<div class='col-md-1 cell'>0</div>").text(currentDate.getDate());
                 if([0,6].contains(currentDate.getDay()))
                     $(cell).addClass("weekend");
-                else
-                    if(this.args.hollyDays.contains(currentDate))
-                        $(cell).addClass("hollyday");
+                else{
+                    if(this.args.hollyDays[this.args.countryCode].where(function (holyDay){ 
+                        return holyDay.getMonth() == currentDate.getMonth() && holyDay.getDate() == currentDate.getDate();
+                    }).length > 0){
+                        calendar.args.days++;
+                        $(cell).addClass("holyDay");
+                    }
                     else
                         $(cell).addClass("weekday");
+                    }
                 $(week).append(cell);
                 currentDate = currentDate.add("day", 1);
                 dayIndex++;
