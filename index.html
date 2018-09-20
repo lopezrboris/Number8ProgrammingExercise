@@ -12,7 +12,6 @@
     <link href="Content/flat-datapicker.css" rel="stylesheet"/>
     <link href='Content/jquery-ui.min.css' rel='stylesheet' media='print' />
     <link href='Content/jquery-ui.css' rel='stylesheet' />
-    <link href='Content/bootstrap.min.css' rel='stylesheet' />
     <link href="style.css" rel="stylesheet" />
 </head>
 <body>
@@ -27,7 +26,7 @@
     </div>
 
     <div id="page-content-wrapper">
-        <div class="form-group">
+        <div class="form-group sticky">
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
                     <div class="form-group">
                         <label for="startDate"> Start date </label>
@@ -37,7 +36,7 @@
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
                     <div class="form-group">
                         <label for="numDays"> Number of days </label>
-                        <input type="text" id="numDays" class="form-control text-right" maxlength="2">
+                        <input type="text" id="numDays" class="form-control text-right" maxlength="4">
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
@@ -47,17 +46,18 @@
                     </div>
                 </div>
         </div>
-        <div class="form-group">
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
+        <div class="form-group results">
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
+                <div class="form-group">
+                    <div class="calendar"></div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
-                    <div class="form-group">
-                        <div class="calendar"></div>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
-                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 columna-3">
+            </div>
         </div>
+        
     </div>
 </div>
     </div>

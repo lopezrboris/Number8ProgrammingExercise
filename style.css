@@ -1,9 +1,16 @@
-.calendar{
-    /*background-color: darkgray;*/
-}
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 80%;
+    z-index: 10;
+    background-color: whitesmoke;
+  }
+  .results{
+      padding-top: 70px;
+  }
 
 .calendar > div > div{
-    background-color: lightgray;
+    background-color: white;
     text-align: center;
     font-weight: bold;
 }
@@ -12,33 +19,41 @@
     background-color: lightgray;
     text-align: center;
     font-weight: bold;
+    width: 223px !important;
+    background-image: linear-gradient(white, #c4dd92);
 }
 
-.out-range{
-    background-color: gray;
+.cell{
+    border: solid 1px #effcd8;
+    text-align: left;
+}
+
+.invalid-date{
+    background-color: lightgray !important;
 }
 
 .valid-date{
     background-color: white;
-    color: black;
-}
-.space{
-    background-color: white;
 }
 
-@media (min-width: 1200px) {
-    .seven-cols .col-md-1,
-    .seven-cols .col-sm-1,
-    .seven-cols .col-lg-1 {
-      width: 14.285714285714285714285714285714%;
-      *width: 14.285714285714285714285714285714%;
-    }
-  }
-
-  .campo-spinner {
-    padding-right: 20px;
+.weekend{
+    background-color: #fcfc05 !important;
 }
 
-    .campo-spinner > input {
+.weekday{
+    color: #445983 !important;
+    background-color: #c4dd92 !important;
+}
+
+.hollyDay{
+    background-color: #ff7900 !important;
+}
+
+  .field-spinner {
+    padding-right: 40px;
+}
+
+    .field-spinner > input {
         margin-top: 0px !important;
     }
+

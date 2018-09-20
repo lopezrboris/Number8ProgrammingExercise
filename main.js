@@ -2,7 +2,7 @@ var initArgs = {
     startDate: new Date(),
     days: 80,
     countryCode: "US",
-    hollydays: []
+    hollyDays: [new Date()]
 };
 //var hollydays = [new Date('2018-')]
 (function(){
@@ -20,50 +20,12 @@ var initArgs = {
             });
             return $(this);
         },
-        fecha: function () {
-            if ($(this).datepicker) $(this).datepicker("getDate"); else return null;
-        },
-        fechaConHoras: function () {
-            if ($(this).datepicker) return generador.formatearFecha($(this).datepicker("getDate")); else return null;
-        },
-        fechaSinHoras: function () {
-            if ($(this).datepicker) return generador.formatearFechaSinHoras($(this).datepicker("getDate")); else return null;
-        },
-        esTablaSimple: function (data, options) {
-            $(this)[0].data = data;
-            $(this)[0].options = options;
-            options.esTablaSimple = true;
-            var table = "#" + this["0"].id;
-            return generador.crearTabla(data, table, options);
-        },
-        esTabla: function (data, options) {
-            var dtable = $(this).dataTable();
-            dtable.fnDestroy();
-
-            $(this)[0].data = data;
-            $(this)[0].options = options;
-            if (options.esTablaInsercion)
-                $(this)[0].optionsInsercion = options.optionsInsercion;
-            var table = "#" + this["0"].id;
-            var tabla = generador.crearTabla(data, table, options).hacerDataTable(options);
-
-            if (options.switches && $(table + " .tb-switch").length) {
-                $(table + ' .tb-switch').each(function (index, element) {
-                    var switchery = new Switchery(element, {
-                        color: options.switchColor || '#041E42'
-                    });
-                });
-            }
-
-
-            return tabla;
-        },
-        esSpinner: function (opciones) {
+        isSpinner: function (opciones) {
             $(this).spinner({
                 min: opciones.minimo || 0,
                 max: opciones.maximo || 100,
                 step: opciones.paso || 1
-            }).entradaEntera().focus(function () { $(this).select() }).parent().addClass("form-control campo-spinner");
+            }).entradaEntera().focus(function () { $(this).select() }).parent().addClass("form-control field-spinner");
             $(this).parent().find("a.ui-spinner-button.ui-spinner-up.ui-corner-tr").addClass(" ui-button ui-widget ui-state-default ui-button-text-only ui-state-hover hand")
                 .append($('<span class="ui-button-text"><span class="ui-icon ui-icon-triangle-1-n">▲</span></span>'));
             $(this).parent().find("a.ui-spinner-button.ui-spinner-down.ui-corner-br").addClass(" ui-button ui-widget ui-state-default ui-button-text-only ui-state-hover hand")
@@ -139,9 +101,8 @@ var initArgs = {
     }
 
     this.initcontrols = function(){
-        $("#startDate").isCalendar({ enlace: { registro: initArgs, clave: "startDate" } });
-        //$("#numDays").esSpinner({ enlace: { registro: initArgs, clave: "startDate" } }).refres() ;
-        $("#numDays").esSpinner({ minimo: 0, maximo: 100, paso: 1, enlace: { registro: initArgs, clave: "days" } });
+        $("#startDate").isCalendar({ enlace: { registro: initArgs, clave: "startDate" }, seleccion: number8calendar.drawCalendar  });
+        $("#numDays").isSpinner({ minimo: 0, maximo: 1000, paso: 1, enlace: { registro: initArgs, clave: "days" }, seleccion: number8calendar.drawCalendar });
     }
 
     this.drawCalendar = function(){
